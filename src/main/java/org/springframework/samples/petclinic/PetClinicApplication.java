@@ -24,6 +24,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.samples.petclinic.repository.SpecialtyRepositoryJPA;
 import org.springframework.samples.petclinic.repository.VetRepositoryJPA;
+import org.springframework.samples.petclinic.services.PetServices;
 import org.springframework.samples.petclinic.vet.Specialty;
 import org.springframework.samples.petclinic.vet.Vet;
 
@@ -36,11 +37,14 @@ import org.springframework.samples.petclinic.vet.Vet;
 @SpringBootApplication
 public class PetClinicApplication implements CommandLineRunner{
 
-	@Autowired
-    VetRepositoryJPA vetRepoJPA;
+//	@Autowired
+//    VetRepositoryJPA vetRepoJPA;
+//	
+//	@Autowired
+//	SpecialtyRepositoryJPA specRepoJPA;
 	
 	@Autowired
-	SpecialtyRepositoryJPA SpecRepoJPA;
+	PetServices petServ;
 	
     public static void main(String[] args) throws Exception {
         SpringApplication.run(PetClinicApplication.class, args);
@@ -51,46 +55,60 @@ public class PetClinicApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
 		
-		Vet v1;
-		List<Vet> lV1 = vetRepoJPA.findByFirstnameAndLastname("Javi", "Atoche");
-		if(lV1.isEmpty()) {
-			// genero un nuevo Vet
-			v1 = new Vet();
-			/* relleno los datos del Vet menos el Id que será autogenerado,
-			 * y se le dara al objeto cuando se utilice el método "save()"
-			 * para guardar o modificar los datos en la base de datos
-			 */
-			v1.setFirstName("Javi");
-			v1.setLastName("Atoche");
-			/* cuando use el método "save()", si no hay problemas, se 
-			 * guardará el objeto v1 en la bbdd y me devolverá el objeto
-			 * con el id ya generado
-			 */
-			v1 = vetRepoJPA.save(lV1);
-		}
+		Vet v1 = petServ.createVet("Javi1", "Atoche1", 2);
+		System.out.println(" Id: "+v1.getId()+", Nombre: "+v1.getFirstName()+", Apellido: "+v1.getLastName());
 		
-		//Ver por pantalla los datos
-		for() {
-			
-		}
-		System.out.println(" Id: "+lV1.getId()+", Nombre: "+lV1.getFirstName()+", Apellido: "+lV1.getLastName());
+//		Vet v1;
+//		List<Vet> lV1 = vetRepoJPA.findByFirstNameAndLastName("Javi", "Atoche");
+//		if(lV1.isEmpty()) {
+//			// genero un nuevo Vet
+//			v1 = new Vet();
+//			/* relleno los datos del Vet menos el Id que será autogenerado,
+//			 * y se le dara al objeto cuando se utilice el método "save()"
+//			 * para guardar o modificar los datos en la base de datos
+//			 */
+//			v1.setFirstName("Javi");
+//			v1.setLastName("Atoche");
+//			/* cuando use el método "save()", si no hay problemas, se 
+//			 * guardará el objeto v1 en la bbdd y me devolverá el objeto
+//			 * con el id ya generado
+//			 */
+//			v1 = vetRepoJPA.save(v1);
+//			// lo anyado a la lista de veterinarios v1
+//			lV1.add(v1);
+//		}
+//		
+//		//Ver por pantalla los datos
+//		for(Vet vi: lV1) {
+//			System.out.println(" Id: "+vi.getId()+", Nombre: "+vi.getFirstName()+", Apellido: "+vi.getLastName());
+//		}
+//		
+//		
+//		// Me traigo una de las especialidades que existen en la tabla Specialty
+//		Specialty sp1 = specRepoJPA.findOne(1);
+//		System.out.println("Id: "+sp1.getId()+", Nombre: "+sp1.getName());
+//		if(sp1 != null) {
+//			for(Vet vi: lV1) {
+//				vi.addSpecialty(sp1);
+//			}
+//		}else {
+//			System.out.println("Error al traer un Specialty");
+//		}
+//		/*
+//		 * mostramos resultados de los veterinarios con su especialidad
+//		 */
+//		for(Vet vi: lV1) {
+//			System.out.println(" Id: "+vi.getId()+", Nombre: "+vi.getFirstName()+", Apellido: "+vi.getLastName()+", Lista Especialidades: "+vi.getSpecialties());
+//		}
+//		
+//		/*
+//		 * Creo una lista y recupero todos los vet 
+//		 * */
+//		List<Vet> listVet1 = vetRepoJPA.findAll();
+//		for(Vet veti: listVet1) {
+//			System.out.println(veti.toString());
+//		}
 		
-		// Me traigo una de las especialidades que existen en la tabla Specialty
-		Specialty sp1 = SpecRepoJPA.findOne(1);
-		System.out.println("Id: "+sp1.getId()+", Nombre: "+sp1.getName());
-		if(sp1 != null) {
-			lV1.addSpecialty(sp1);
-		}else {
-			System.out.println("Error al traer un Specialty");
-		}
-		System.out.println(" Id: "+lV1.getId()+", Nombre: "+lV1.getFirstName()+", Apellido: "+lV1.getLastName()+", Lista Especialidades: "+lV1.getSpecialties());
-		
-		
-		/*
-		 * Creo una lista y recupero todos los vet 
-		 * */
-		List<Vet> listVet1 = vetRepoJPA.findAll();
-		System.out.println("Lista de Veterinarios: "+listVet1.toString());
 		
 	}
     

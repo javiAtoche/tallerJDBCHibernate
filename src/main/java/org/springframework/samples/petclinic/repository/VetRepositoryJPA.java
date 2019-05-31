@@ -17,5 +17,5 @@ import org.springframework.samples.petclinic.vet.Vet;
 
 public interface VetRepositoryJPA extends JpaRepository<Vet,Integer> {
 	
-	List<Vet> findByFirstnameAndLastname(String firstName, String lastName);
+	List<Vet> findByFirstNameAndLastName(String firstName, String lastName);
 }
