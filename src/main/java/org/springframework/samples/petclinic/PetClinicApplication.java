@@ -57,7 +57,7 @@ public class PetClinicApplication implements CommandLineRunner{
 		
 		Vet v1 = petServ.createVet("Javi1", "Atoche1", 2);
 		System.out.println(" Id: "+v1.getId()+", Nombre: "+v1.getFirstName()+", Apellido: "+v1.getLastName());
-		
+		 
 //		Vet v1;
 //		List<Vet> lV1 = vetRepoJPA.findByFirstNameAndLastName("Javi", "Atoche");
 //		if(lV1.isEmpty()) {
